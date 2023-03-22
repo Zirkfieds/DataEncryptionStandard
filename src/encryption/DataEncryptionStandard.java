@@ -142,16 +142,22 @@ public class DataEncryptionStandard {
     public DataEncryptionStandard(String plainText, String key) {
         this.plainText = plainText;
         this.plainTextInBits = new Bits(plainText);
-        plainTextInBits.showBits(4);
+        if (plainTextInBits.getBits() == null) {
+            System.out.println("Error while initializing the DES Encryption Module.");
+        }
+//        plainTextInBits.showBits(4);
 
         this.key = key;
         this.keyInBits = new Bits(key);
-        keyInBits.showBits(4);
+        if (keyInBits.getBits() == null) {
+            System.out.println("Error while initializing the DES Encryption Module.");
+        }
+//        keyInBits.showBits(4);
     }
 
-    public void DES() {
+    public void encryption() {
         Bits mappedPlainTextInBits = initialPermutation();
-        mappedPlainTextInBits.showBits(4);
+//        mappedPlainTextInBits.showBits(4);
         int mbl = DataEncryptionStandard.IP.length;
         generateKeySequences();
 
@@ -169,8 +175,8 @@ public class DataEncryptionStandard {
         }
         Bits preInvBits = bitConcat(lastR, lastL);
         Bits result = bitMapping(preInvBits, DataEncryptionStandard.IPinv);
-        result.showBits(4);
-        result.showString();
+//        result.showBits(4);
+        result.showHex();
 
     }
 

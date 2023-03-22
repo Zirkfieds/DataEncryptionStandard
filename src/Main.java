@@ -11,12 +11,16 @@ public class Main {
                 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF
         };
 
-//        DataEncryptionStandard des = new DataEncryptionStandard("\u0001#Eg\u0089«Íï", "\u00134Wy\u009B¼ßñ");
+//        DataEncryptionStandard des = new DataEncryptionStandard(
+//                "\u0001#Eg\u0089«Íï",
+//                "\u00134Wy\u009B¼ßñ"
+//        );
         DataEncryptionStandard des = new DataEncryptionStandard(
-                "\u0001#Eg\u0089«Íï",
-                "\u00134Wy\u009B¼ßñ"
+                "0x8787878787878787",
+                "0x0E329232EA6D0D73"
         );
-        des.DES();
+
+        des.encryption();
     }
 
 }
