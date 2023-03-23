@@ -1,11 +1,5 @@
 package utils;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
-
 public class Bits {
 
     private String string;
@@ -21,7 +15,6 @@ public class Bits {
             String regex = "0[xX][0-9a-fA-F]+";
             if (string.matches(regex)) {
                 this.hex = string.substring(2).toUpperCase();
-//                System.out.println(hex);
                 hex2bit();
                 bit2str();
             }
@@ -106,7 +99,6 @@ public class Bits {
         for (int i = 0; i < 64; i++) {
             bits[(i / 4) * 4 - i % 4 + 4 - 1] = (hexCodes.indexOf(hex.charAt(i / 4)) >> (i % 4)) & 0x1;
         }
-//        System.out.println(bits);
         this.bits = bits;
     }
 

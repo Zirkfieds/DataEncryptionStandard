@@ -15,7 +15,6 @@ public class DESDecrypter extends DataEncryptionStandard {
 
     public String decryption() {
         Bits mappedPlainTextInBits = initialPermutation();
-//        mappedPlainTextInBits.showBits(4);
         int mbl = DESDecrypter.IP.length;
         generateKeySequences();
 

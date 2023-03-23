@@ -158,9 +158,7 @@ public class DataEncryptionStandard {
         ArrayList<Bits> hexabits = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             int[] hexa = new int[6];
-            for (int j = 0; j < 6; j++) {
-                hexa[j] = xorBits[i * 6 + j];
-            }
+            System.arraycopy(xorBits, i * 6, hexa, 0, 6);
             hexabits.add(new Bits(hexa));
         }
 
