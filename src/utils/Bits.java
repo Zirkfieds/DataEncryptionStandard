@@ -21,7 +21,7 @@ public class Bits {
             String regex = "0[xX][0-9a-fA-F]+";
             if (string.matches(regex)) {
                 this.hex = string.substring(2).toUpperCase();
-                System.out.println(hex);
+//                System.out.println(hex);
                 hex2bit();
                 bit2str();
             }
@@ -45,6 +45,15 @@ public class Bits {
 
     public int[] getBits() {
         return bits;
+    }
+
+    public String getHex() {
+        return hex;
+    }
+
+    public void syncFromBits() {
+        bit2str();
+        bit2hex();
     }
 
     private void bit2str() {
@@ -87,7 +96,7 @@ public class Bits {
             String tmp = bitString.substring(i << 2, (i + 1) << 2);
             sb.append(Integer.toHexString(Integer.parseInt(tmp, 2)));
         }
-        this.hex = sb.toString();
+        this.hex = sb.toString().toUpperCase();
     }
 
     private void hex2bit() {

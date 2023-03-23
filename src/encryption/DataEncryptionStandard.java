@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class DataEncryptionStandard {
 
-    private final static int[] IP = {
+    protected final static int[] IP = {
             58, 50, 42, 34, 26, 18, 10, 2,
             60, 52, 44, 36, 28, 20, 12, 4,
             62, 54, 46, 38, 30, 22, 14, 6,
@@ -17,7 +17,7 @@ public class DataEncryptionStandard {
             63, 55, 47, 39, 31, 23, 15, 7
     };
 
-    private final static int[] IPinv = {
+    protected final static int[] IPinv = {
             40, 8, 48, 16, 56, 24, 64, 32,
             39, 7, 47, 15, 55, 23, 63, 31,
             38, 6, 46, 14, 54, 22, 62, 30,
@@ -28,7 +28,7 @@ public class DataEncryptionStandard {
             33, 1, 41, 9, 49, 17, 57, 25
     };
 
-    private final static int[] PC1 = {
+    protected final static int[] PC1 = {
             57, 49, 41, 33, 25, 17, 9,
             1, 58, 50, 42, 34, 26, 18,
             10, 2, 59, 51, 43, 35, 27,
@@ -39,11 +39,11 @@ public class DataEncryptionStandard {
             21, 13, 5, 28, 20, 12, 4
     };
 
-    private final static int[] leftshiftMap = {
+    protected final static int[] leftshiftMap = {
             0, 1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1
     };
 
-    private final static int[] PC2 = {
+    protected final static int[] PC2 = {
             14, 17, 11, 24, 1, 5,
             3, 28, 15, 6, 21, 10,
             23, 19, 12, 4, 26, 8,
@@ -54,7 +54,7 @@ public class DataEncryptionStandard {
             46, 42, 50, 36, 29, 32
     };
 
-    private final static int[] EBitSelection = {
+    protected final static int[] EBitSelection = {
             32, 1, 2, 3, 4, 5,
             4, 5, 6, 7, 8, 9,
             8, 9, 10, 11, 12, 13,
@@ -65,7 +65,7 @@ public class DataEncryptionStandard {
             28, 29, 30, 31, 32, 1
     };
 
-    private final static int[][] selectionBlocks = {
+    protected final static int[][] selectionBlocks = {
             {
                     14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7,
                     0, 15, 7, 4, 14, 2, 13, 1, 10, 6, 12, 11, 9, 5, 3, 8,
@@ -117,7 +117,7 @@ public class DataEncryptionStandard {
 
     };
 
-    private final static int[] permutationBlock = {
+    protected final static int[] permutationBlock = {
         16, 7 , 20, 21,
         29, 12, 28, 17,
         1 , 15, 23, 26,
@@ -128,59 +128,30 @@ public class DataEncryptionStandard {
         22, 11, 4 , 25
     };
 
-    private String plainText;
-    private Bits plainTextInBits;
+    protected String plainText;
+    protected Bits plainTextInBits;
 
-    private String key;
-    private Bits keyInBits;
-    final ArrayList<Bits> C = new ArrayList<>();
-    final ArrayList<Bits> D = new ArrayList<>();
-    final ArrayList<Bits> K = new ArrayList<>();
-
-    private String cipherText;
+    protected String key;
+    protected Bits keyInBits;
+    protected final ArrayList<Bits> C = new ArrayList<>();
+    protected final ArrayList<Bits> D = new ArrayList<>();
+    protected final ArrayList<Bits> K = new ArrayList<>();
 
     public DataEncryptionStandard(String plainText, String key) {
         this.plainText = plainText;
         this.plainTextInBits = new Bits(plainText);
         if (plainTextInBits.getBits() == null) {
-            System.out.println("Error while initializing the DES Encryption Module.");
+            System.out.println("Error.");
         }
-//        plainTextInBits.showBits(4);
 
         this.key = key;
         this.keyInBits = new Bits(key);
         if (keyInBits.getBits() == null) {
-            System.out.println("Error while initializing the DES Encryption Module.");
+            System.out.println("Error.");
         }
-//        keyInBits.showBits(4);
     }
 
-    public void encryption() {
-        Bits mappedPlainTextInBits = initialPermutation();
-//        mappedPlainTextInBits.showBits(4);
-        int mbl = DataEncryptionStandard.IP.length;
-        generateKeySequences();
-
-        Bits L0 = bitCopy(mappedPlainTextInBits, 0, mbl / 2);
-        Bits R0 = bitCopy(mappedPlainTextInBits, mbl / 2, mbl / 2);
-
-        Bits lastL = L0;
-        Bits lastR = R0;
-        for (int n = 0; n < 16; n++) {
-            Bits Ln = lastR;
-            Bits f = fFunction(lastR, K.get((n + 1) % K.size()));
-            Bits Rn = bitXOR(lastL, f);
-            lastL = Ln;
-            lastR = Rn;
-        }
-        Bits preInvBits = bitConcat(lastR, lastL);
-        Bits result = bitMapping(preInvBits, DataEncryptionStandard.IPinv);
-//        result.showBits(4);
-        result.showHex();
-
-    }
-
-    private Bits fFunction(Bits lastR, Bits k) {
+    protected Bits fFunction(Bits lastR, Bits k) {
         Bits e = bitMapping(lastR, DataEncryptionStandard.EBitSelection);
         int[] xorBits = bitXOR(e, k).getBits();
 
@@ -219,7 +190,6 @@ public class DataEncryptionStandard {
         int coln = bit2dec(col);
         int ret = s[rown * 16 + coln];
 
-//        System.out.println(Arrays.toString(row) + ' ' + Arrays.toString(col) + ' ' + rown + '/' + coln + ": " + ret);
         return new Bits(dec2bit(ret));
     }
 
@@ -295,7 +265,6 @@ public class DataEncryptionStandard {
 
     public void generateKeySequences() {
         Bits key0 = bitMapping(this.keyInBits, DataEncryptionStandard.PC1);
-//        K.add(key0);
 
         int pc1l = DataEncryptionStandard.PC1.length;
         int pc2l = DataEncryptionStandard.PC2.length;
@@ -314,8 +283,6 @@ public class DataEncryptionStandard {
             Bits k = bitConcat(C.get(i), D.get(i));
             K.add(bitMapping(k, DataEncryptionStandard.PC2));
         }
-
     }
-
 
 }
