@@ -37,4 +37,13 @@ public class DESEncrypter extends DataEncryptionStandard {
 
     }
 
+    @Override
+    public String getLogs() {
+        StringBuilder encLog = new StringBuilder("Encryption Log\n");
+
+        // TODO: toString() for the product from every step in the decryption
+
+        return encLog.toString();
+    }
+
 }

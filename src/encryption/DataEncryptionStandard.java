@@ -283,4 +283,8 @@ public class DataEncryptionStandard {
         }
     }
 
+    public String getLogs() {
+        return null;
+    }
+
 }

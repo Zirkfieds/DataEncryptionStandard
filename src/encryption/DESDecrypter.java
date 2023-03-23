@@ -37,4 +37,13 @@ public class DESDecrypter extends DataEncryptionStandard {
         return "0x" + result.getHex();
     }
 
+    @Override
+    public String getLogs() {
+        StringBuilder decLog = new StringBuilder("Decryption Log\n");
+
+        // TODO: toString() for the product from every step in the decryption
+
+        return decLog.toString();
+    }
+
 }
