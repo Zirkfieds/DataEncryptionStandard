@@ -14,6 +14,7 @@ public class DESDecrypter extends DataEncryptionStandard {
     }
 
     public String decryption() {
+
         Bits mappedPlainTextInBits = initialPermutation();
         int mbl = DESDecrypter.IP.length;
         generateKeySequences();
@@ -41,7 +42,13 @@ public class DESDecrypter extends DataEncryptionStandard {
     public String getLogs() {
         StringBuilder decLog = new StringBuilder("Decryption Log\n");
 
-        // TODO: toString() for the product from every step in the decryption
+        decLog.append("KeySequence KS:\n");
+        int i = 1;
+        for (Bits k : K) {
+            k.syncFromBits();
+            decLog.append("K").append(i).append("=0x").append(k.getHex()).append("\n");
+            i++;
+        }
 
         return decLog.toString();
     }
