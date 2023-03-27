@@ -50,6 +50,14 @@ public class Bits {
     }
 
     private void bit2str() {
+
+        /*
+         * convert the bits to string
+         * @param
+         * []* @return void
+         * @date 2023/3/27 11:44
+         */
+
         int bl = bits.length;
         int sl = bl / bitCnt;
 
@@ -66,6 +74,14 @@ public class Bits {
     }
 
     private void str2bit() {
+
+        /*
+         * parse the string to bits
+         * @param
+         * []* @return void
+         * @date 2023/3/27 11:47
+         */
+
         int l = string.length();
         int bl = l * bitCnt;
 
@@ -76,6 +92,14 @@ public class Bits {
     }
 
     private void bit2hex() {
+
+        /*
+         * converts the bits to hex
+         * @param
+         * []* @return void
+         * @date 2023/3/27 11:44
+         */
+
         int bl = bits.length;
 
         StringBuilder binString = new StringBuilder();
@@ -93,6 +117,14 @@ public class Bits {
     }
 
     private void hex2bit() {
+
+        /*
+         * parse the hex to bits
+         * @param
+         * []* @return void
+         * @date 2023/3/27 11:44
+         */
+
         int[] bits = new int[64];
 
         final String hexCodes = "0123456789ABCDEF";
@@ -103,6 +135,14 @@ public class Bits {
     }
 
     public Bits leftshift(int digits) {
+
+        /*
+         * leftshift the bits
+         * @param digits
+         * [int]* @return utils.Bits
+         * @date 2023/3/27 11:45
+         */
+
         int bl = bits.length;
         int[] newBits = new int[bl];
         for (int i = 0; i < bl; i++) {

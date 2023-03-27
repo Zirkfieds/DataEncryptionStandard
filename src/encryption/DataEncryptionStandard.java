@@ -152,6 +152,15 @@ public class DataEncryptionStandard {
     }
 
     protected Bits fFunction(Bits lastR, Bits k) {
+
+        /*
+         * simulates the f function
+         * @param lastR
+         * @param k
+         * [utils.Bits, utils.Bits]* @return utils.Bits
+         * @date 2023/3/27 11:36
+         */
+
         Bits e = bitMapping(lastR, DataEncryptionStandard.EBitSelection);
         int[] xorBits = bitXOR(e, k).getBits();
 
@@ -178,7 +187,15 @@ public class DataEncryptionStandard {
         return ret;
     }
 
+    
     private Bits sFunction(Bits b, int[] s) {
+        /*
+         * simulate the S-box operation
+         * @param b
+         * @param s
+         * [utils.Bits, int[]]* @return utils.Bits
+         * @date 2023/3/27 11:34
+         */
 
         int[] bBits = b.getBits();
 
@@ -192,6 +209,14 @@ public class DataEncryptionStandard {
     }
 
     private int bit2dec(int[] bits) {
+
+        /*
+         * conversion between bits and decimals
+         * @param bits
+         * [int[]]* @return int
+         * @date 2023/3/27 11:38
+         */
+
         int dec = 0;
         for (int i = bits.length - 1, pow = 0; i >= 0; i--, pow++) {
             dec += (bits[i] << pow);
@@ -200,6 +225,14 @@ public class DataEncryptionStandard {
     }
 
     private int[] dec2bit(int dec) {
+
+        /*
+         * conversion between decimals and bits
+         * @param dec
+         * [int]* @return int[]
+         * @date 2023/3/27 11:39
+         */
+
         String bin = Integer.toBinaryString(dec);
         char[] chars = bin.toCharArray();
 
@@ -218,6 +251,14 @@ public class DataEncryptionStandard {
 
     public Bits bitMapping(Bits b, int[] map) {
 
+        /*
+         * map Bits b to another Bits according to the given map
+         * @param b
+         * @param map
+         * [utils.Bits, int[]]* @return utils.Bits
+         * @date 2023/3/27 11:39
+         */
+
         int[] bits = b.getBits();
         int[] mappedBits = new int[map.length];
 
@@ -229,6 +270,16 @@ public class DataEncryptionStandard {
     }
 
     public Bits bitCopy(Bits src, int start, int length) {
+
+        /*
+         * copy a part of Bits from start at a given length from src and  return it as a new Bits
+         * @param src
+         * @param start
+         * @param length
+         * [utils.Bits, int, int]* @return utils.Bits
+         * @date 2023/3/27 11:40
+         */
+
         int[] srcBits = src.getBits();
         int[] dstBits = new int[length];
         System.arraycopy(srcBits, start, dstBits, 0, length);
@@ -236,6 +287,15 @@ public class DataEncryptionStandard {
     }
 
     public Bits bitConcat(Bits a, Bits b) {
+
+        /*
+         * return a new Bits with b appended at the end of a
+         * @param a
+         * @param b
+         * [utils.Bits, utils.Bits]* @return utils.Bits
+         * @date 2023/3/27 11:41
+         */
+
         int[] aBits = a.getBits();
         int[] bBits = b.getBits();
         int[] cBits = new int[aBits.length + bBits.length];
@@ -247,6 +307,15 @@ public class DataEncryptionStandard {
     }
 
     public Bits bitXOR(Bits a, Bits b) {
+
+        /*
+         * return a XOR b as a new Bits
+         * @param a
+         * @param b
+         * [utils.Bits, utils.Bits]* @return utils.Bits
+         * @date 2023/3/27 11:42
+         */
+
         int[] aBits = a.getBits();
         int[] bBits = b.getBits();
         int[] cBits = new int[aBits.length];
@@ -262,6 +331,14 @@ public class DataEncryptionStandard {
     }
 
     public void generateKeySequences() {
+
+        /*
+         * generate KeySequence K alongside its components C and D
+         * @param
+         * []* @return void
+         * @date 2023/3/27 11:42
+         */
+
         Bits key0 = bitMapping(this.keyInBits, DataEncryptionStandard.PC1);
 
         int pc1l = DataEncryptionStandard.PC1.length;

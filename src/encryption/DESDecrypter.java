@@ -25,6 +25,7 @@ public class DESDecrypter extends DataEncryptionStandard {
         Bits lastL = L0;
         Bits lastR = R0;
         for (int n = 15; n >= 0; n--) {
+            // use the KeySequence K in reverse order to decrypt
             Bits Ln = lastR;
             Bits f = fFunction(lastR, K.get((n + 1) % K.size()));
             Bits Rn = bitXOR(lastL, f);
