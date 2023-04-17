@@ -2,6 +2,9 @@ package encryption;
 
 import utils.Bits;
 
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class DataEncryptionStandard {
@@ -133,6 +136,8 @@ public class DataEncryptionStandard {
 
     protected String key;
     protected Bits keyInBits;
+
+    protected final ArrayList<Bits> P = new ArrayList<>();
     protected final ArrayList<Bits> C = new ArrayList<>();
     protected final ArrayList<Bits> D = new ArrayList<>();
     protected final ArrayList<Bits> K = new ArrayList<>();
@@ -140,9 +145,6 @@ public class DataEncryptionStandard {
     public DataEncryptionStandard(String plainText, String key) {
         this.plainText = plainText;
         this.plainTextInBits = new Bits(plainText);
-        if (plainTextInBits.getBits() == null) {
-            System.out.println("Error.");
-        }
 
         this.key = key;
         this.keyInBits = new Bits(key);
@@ -258,6 +260,7 @@ public class DataEncryptionStandard {
          * [utils.Bits, int[]]* @return utils.Bits
          * @date 2023/3/27 11:39
          */
+        b.syncFromBits();
 
         int[] bits = b.getBits();
         int[] mappedBits = new int[map.length];
@@ -326,8 +329,36 @@ public class DataEncryptionStandard {
         return new Bits(cBits);
     }
 
-    public Bits initialPermutation() {
-        return bitMapping(this.plainTextInBits, DataEncryptionStandard.IP);
+    private static final int unpackLen = 2;
+
+    public static String str2hex(String s) {
+        byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
+        StringBuilder hex = new StringBuilder();
+
+        String formatStr = "%0" + unpackLen + "X";
+
+        for (byte b : bytes) {
+            hex.append(String.format(formatStr, b));
+        }
+
+        return hex.toString();
+    }
+
+    public static String hex2str(String hs) throws UnsupportedEncodingException {
+        System.out.println("hex2str: " + hs);
+        StringBuilder sb = new StringBuilder();
+        // unpacking [unpackLen] digits as a character
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        for (int i = 0; i < hs.length(); i += unpackLen) {
+            String str = hs.substring(i, i + unpackLen);
+            baos.write(Integer.parseInt(str, 16));
+        }
+//        return baos.toString(StandardCharsets.UTF_8).replace('\0', ' ').strip();
+        return baos.toString(StandardCharsets.UTF_8);
+    }
+
+    public Bits initialPermutation(Bits bits) {
+        return bitMapping(bits, DataEncryptionStandard.IP);
     }
 
     public void generateKeySequences() {

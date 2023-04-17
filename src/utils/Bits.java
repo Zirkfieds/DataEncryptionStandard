@@ -8,13 +8,11 @@ public class Bits {
 
     private final int bitCnt = 8;
 
-//    private static final Map<String, String> hexMap = new HashMap<>();
-
     public Bits(String string) {
-        if (string.length() == 18) {
-            String regex = "0[xX][0-9a-fA-F]+";
+        if (string.length() == 16) {
+            String regex = "[0-9a-fA-F]+";
             if (string.matches(regex)) {
-                this.hex = string.substring(2).toUpperCase();
+                this.hex = string.toUpperCase();
                 hex2bit();
                 bit2str();
             }

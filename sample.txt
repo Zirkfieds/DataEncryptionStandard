@@ -1,0 +1,2 @@
+DES加密测试，这是明文。
+DES Encryption/Decryption Test. This is the plain text.
